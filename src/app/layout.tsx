@@ -14,7 +14,12 @@ export default function RootLayout({
         <header>
           <Navigation />
         </header>
-        {children}
+
+        <main>{children}</main>
+
+        <footer>
+          <p>&copy; {new Date().getFullYear()} The Wild Oasis</p>
+        </footer>
       </body>
     </html>
   );
