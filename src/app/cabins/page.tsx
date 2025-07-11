@@ -1,3 +1,15 @@
-export default function Page() {
-  return <div>The Wild Oasis Cabins</div>;
+export default async function Page() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const data = await res.json();
+
+  return (
+    <div>
+      <h2>The Wild Oasis Cabins</h2>
+      <ul>
+        {data.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
