@@ -1,6 +1,3 @@
-import Logo from "@/app/_components/Logo";
-import Navigation from "@/app/_components/Navigation";
-
 import { Josefin_Sans } from "next/font/google";
 
 const josefin = Josefin_Sans({
@@ -29,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col`}
+        className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col relative`}
       >
         <Header />
 
