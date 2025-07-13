@@ -1,28 +1,31 @@
 import { Josefin_Sans } from "next/font/google";
+import "@/app/_styles/globals.css";
+import Header from "@/app/_components/Header";
+import type { Metadata } from "next";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   display: "swap",
 });
 
-import "@/app/_styles/globals.css";
-import Header from "./_components/Header";
-
-export const metadata = {
-  // title: "The Wild Oasis",
+export const metadata: Metadata = {
   title: {
     template: "%s / The Wild Oasis",
     default: "Welcome / The Wild Oasis",
   },
   description:
-    "Luxurious cabin hotel, located  in the heart of the Italian Dolomites, surrounded by beautiful mountains and dark forests",
+    "Luxurious cabin hotel, located in the heart of the Italian Dolomites, surrounded by beautiful mountains and dark forests",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  themeColor: "#0f172a",
 };
 
-export default function RootLayout({
-  children,
-}: {
+type RootLayoutProps = {
   children: React.ReactNode;
-}) {
+};
+
+export default function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
     <html lang="en">
       <body
@@ -34,7 +37,7 @@ export default function RootLayout({
           <main className="max-w-7xl mx-auto w-full">{children}</main>
         </div>
 
-        <footer>
+        <footer className="text-center py-6 text-sm text-primary-500">
           <p>&copy; {new Date().getFullYear()} The Wild Oasis</p>
         </footer>
       </body>

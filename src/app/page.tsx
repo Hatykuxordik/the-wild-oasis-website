@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import bg from "../../public/bg.png";
 
-export default function Page() {
+export default function Page(): JSX.Element {
   return (
     <main className="mt-24">
       <Image
