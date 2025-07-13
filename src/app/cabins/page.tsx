@@ -1,12 +1,23 @@
 import CabinCard from "@/app/_components/CabinCard";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Cabins",
 };
 
-export default function Page() {
-  // CHANGE
-  const cabins = [];
+// 1️⃣ Define the shape of a cabin
+type Cabin = {
+  id: string;
+  name: string;
+  image: string;
+  maxCapacity: number;
+  regularPrice: number;
+  discount: number;
+};
+
+export default function Page(): JSX.Element {
+  // 2️⃣ Type the array correctly
+  const cabins: Cabin[] = [];
 
   return (
     <div>
@@ -22,12 +33,17 @@ export default function Page() {
         Welcome to paradise.
       </p>
 
-      {cabins.length > 0 && (
+      {/* 3️⃣ Optional: Show fallback if no cabins */}
+      {cabins.length > 0 ? (
         <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
           {cabins.map((cabin) => (
             <CabinCard cabin={cabin} key={cabin.id} />
           ))}
         </div>
+      ) : (
+        <p className="text-lg text-primary-300">
+          No cabins available right now. Please check back later.
+        </p>
       )}
     </div>
   );
