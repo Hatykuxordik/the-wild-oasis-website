@@ -5,9 +5,24 @@ export const metadata = {
   title: "Reservations",
 };
 
-export default function Page() {
+type Booking = {
+  id: string;
+  startDate: string;
+  endDate: string;
+  numNights: number;
+  totalPrice: number;
+  numGuests: number;
+  status: string;
+  created_at: string;
+  cabins: {
+    name: string;
+    image: string;
+  };
+};
+
+export default function Page(): JSX.Element {
   // CHANGE
-  const bookings = [];
+  const bookings: Booking[] = [];
 
   return (
     <div>
