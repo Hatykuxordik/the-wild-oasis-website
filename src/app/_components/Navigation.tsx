@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Navigation() {
+export default function Navigation(): JSX.Element {
   return (
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
