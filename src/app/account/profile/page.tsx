@@ -5,7 +5,7 @@ export const metadata = {
   title: "Update profile",
 };
 
-export default function Page() {
+export default function Page(): JSX.Element {
   // CHANGE
   const countryFlag = "ng.jpg";
   const nationality = "nigeria";

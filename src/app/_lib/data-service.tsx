@@ -1,224 +1,220 @@
-import { eachDayOfInterval } from 'date-fns';
+import { eachDayOfInterval } from "date-fns";
+import { supabase } from "@/app/_lib/supabase";
 
-/////////////
-// GET
-
-export async function getCabin(id) {
-  const { data, error } = await supabase
-    .from('cabins')
-    .select('*')
-    .eq('id', id)
-    .single();
-
-  // For testing
-  // await new Promise((res) => setTimeout(res, 1000));
-
-  if (error) {
-    console.error(error);
-  }
-
-  return data;
-}
-
-export async function getCabinPrice(id) {
-  const { data, error } = await supabase
-    .from('cabins')
-    .select('regularPrice, discount')
-    .eq('id', id)
-    .single();
-
-  if (error) {
-    console.error(error);
-  }
-
-  return data;
-}
-
-export const getCabins = async function () {
-  const { data, error } = await supabase
-    .from('cabins')
-    .select('id, name, maxCapacity, regularPrice, discount, image')
-    .order('name');
-
-  if (error) {
-    console.error(error);
-    throw new Error('Cabins could not be loaded');
-  }
-
-  return data;
+// Types
+export type Cabin = {
+  id: string;
+  name: string;
+  maxCapacity: number;
+  regularPrice: number;
+  discount: number;
+  image: string;
 };
 
-// Guests are uniquely identified by their email address
-export async function getGuest(email) {
+export type Guest = {
+  id: string;
+  fullName: string;
+  email: string;
+  nationalID: string;
+  nationality: string;
+  countryFlag: string;
+  created_at: string;
+};
+
+export type Booking = {
+  id: string;
+  guestId: string;
+  startDate: string;
+  endDate: string;
+  numNights: number;
+  numGuests: number;
+  totalPrice: number;
+  cabinId: string;
+  status: string;
+  created_at: string;
+  cabins?: { name: string; image: string };
+};
+
+export type Settings = {
+  minBookingLength: number;
+  maxBookingLength: number;
+  maxGuestsPerBooking: number;
+};
+
+export type Country = {
+  name: string;
+  flag: string;
+};
+
+// GET
+export async function getCabin(id: string): Promise<Cabin | null> {
   const { data, error } = await supabase
-    .from('guests')
-    .select('*')
-    .eq('email', email)
+    .from("cabins")
+    .select("*")
+    .eq("id", id)
     .single();
-
-  // No error here! We handle the possibility of no guest in the sign in callback
+  if (error) console.error(error);
   return data;
 }
 
-export async function getBooking(id) {
-  const { data, error, count } = await supabase
-    .from('bookings')
-    .select('*')
-    .eq('id', id)
+export async function getCabinPrice(
+  id: string
+): Promise<Pick<Cabin, "regularPrice" | "discount"> | null> {
+  const { data, error } = await supabase
+    .from("cabins")
+    .select("regularPrice, discount")
+    .eq("id", id)
     .single();
+  if (error) console.error(error);
+  return data;
+}
+
+export async function getCabins(): Promise<Cabin[]> {
+  const { data, error } = await supabase
+    .from("cabins")
+    .select("id, name, maxCapacity, regularPrice, discount, image")
+    .order("name");
 
   if (error) {
     console.error(error);
-    throw new Error('Booking could not get loaded');
+    throw new Error("Cabins could not be loaded");
   }
 
+  return data as Cabin[];
+}
+
+export async function getGuest(email: string): Promise<Guest | null> {
+  const { data } = await supabase
+    .from("guests")
+    .select("*")
+    .eq("email", email)
+    .single();
   return data;
 }
 
-export async function getBookings(guestId) {
-  const { data, error, count } = await supabase
-    .from('bookings')
-    // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
+export async function getBooking(id: string): Promise<Booking> {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) throw new Error("Booking could not get loaded");
+  return data as Booking;
+}
+
+export async function getBookings(guestId: string): Promise<Booking[]> {
+  const { data, error } = await supabase
+    .from("bookings")
     .select(
-      'id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)'
+      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
     )
-    .eq('guestId', guestId)
-    .order('startDate');
+    .eq("guestId", guestId)
+    .order("startDate");
 
-  if (error) {
-    console.error(error);
-    throw new Error('Bookings could not get loaded');
-  }
-
-  return data;
+  if (error) throw new Error("Bookings could not get loaded");
+  return data as Booking[];
 }
 
-export async function getBookedDatesByCabinId(cabinId) {
+export async function getBookedDatesByCabinId(
+  cabinId: string
+): Promise<Date[]> {
   let today = new Date();
   today.setUTCHours(0, 0, 0, 0);
-  today = today.toISOString();
+  const todayISO = today.toISOString();
 
-  // Getting all bookings
   const { data, error } = await supabase
-    .from('bookings')
-    .select('*')
-    .eq('cabinId', cabinId)
-    .or(`startDate.gte.${today},status.eq.checked-in`);
+    .from("bookings")
+    .select("*")
+    .eq("cabinId", cabinId)
+    .or(`startDate.gte.${todayISO},status.eq.checked-in`);
 
-  if (error) {
-    console.error(error);
-    throw new Error('Bookings could not get loaded');
-  }
+  if (error) throw new Error("Bookings could not get loaded");
 
-  // Converting to actual dates to be displayed in the date picker
   const bookedDates = data
-    .map((booking) => {
-      return eachDayOfInterval({
+    .map((booking: Booking) =>
+      eachDayOfInterval({
         start: new Date(booking.startDate),
         end: new Date(booking.endDate),
-      });
-    })
+      })
+    )
     .flat();
 
   return bookedDates;
 }
 
-export async function getSettings() {
-  const { data, error } = await supabase.from('settings').select('*').single();
-
-  if (error) {
-    console.error(error);
-    throw new Error('Settings could not be loaded');
-  }
-
-  return data;
+export async function getSettings(): Promise<Settings> {
+  const { data, error } = await supabase.from("settings").select("*").single();
+  if (error) throw new Error("Settings could not be loaded");
+  return data as Settings;
 }
 
-export async function getCountries() {
+export async function getCountries(): Promise<Country[]> {
   try {
     const res = await fetch(
-      'https://restcountries.com/v2/all?fields=name,flag'
+      "https://restcountries.com/v2/all?fields=name,flag"
     );
     const countries = await res.json();
-    return countries;
+    return countries as Country[];
   } catch {
-    throw new Error('Could not fetch countries');
+    throw new Error("Could not fetch countries");
   }
 }
 
-/////////////
 // CREATE
-
-export async function createGuest(newGuest) {
-  const { data, error } = await supabase.from('guests').insert([newGuest]);
-
-  if (error) {
-    console.error(error);
-    throw new Error('Guest could not be created');
-  }
-
+export async function createGuest(
+  newGuest: Omit<Guest, "id" | "created_at">
+): Promise<Guest[]> {
+  const { data, error } = await supabase.from("guests").insert([newGuest]);
+  if (error) throw new Error("Guest could not be created");
   return data;
 }
 
-export async function createBooking(newBooking) {
+export async function createBooking(
+  newBooking: Omit<Booking, "id" | "created_at">
+): Promise<Booking> {
   const { data, error } = await supabase
-    .from('bookings')
+    .from("bookings")
     .insert([newBooking])
-    // So that the newly created object gets returned!
     .select()
     .single();
-
-  if (error) {
-    console.error(error);
-    throw new Error('Booking could not be created');
-  }
-
+  if (error) throw new Error("Booking could not be created");
   return data;
 }
 
-/////////////
 // UPDATE
-
-// The updatedFields is an object which should ONLY contain the updated data
-export async function updateGuest(id, updatedFields) {
+export async function updateGuest(
+  id: string,
+  updatedFields: Partial<Guest>
+): Promise<Guest> {
   const { data, error } = await supabase
-    .from('guests')
+    .from("guests")
     .update(updatedFields)
-    .eq('id', id)
+    .eq("id", id)
     .select()
     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error('Guest could not be updated');
-  }
+  if (error) throw new Error("Guest could not be updated");
   return data;
 }
 
-export async function updateBooking(id, updatedFields) {
+export async function updateBooking(
+  id: string,
+  updatedFields: Partial<Booking>
+): Promise<Booking> {
   const { data, error } = await supabase
-    .from('bookings')
+    .from("bookings")
     .update(updatedFields)
-    .eq('id', id)
+    .eq("id", id)
     .select()
     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error('Booking could not be updated');
-  }
+  if (error) throw new Error("Booking could not be updated");
   return data;
 }
 
-/////////////
 // DELETE
-
-export async function deleteBooking(id) {
-  const { data, error } = await supabase.from('bookings').delete().eq('id', id);
-
-  if (error) {
-    console.error(error);
-    throw new Error('Booking could not be deleted');
-  }
+export async function deleteBooking(id: string): Promise<Booking[]> {
+  const { data, error } = await supabase.from("bookings").delete().eq("id", id);
+  if (error) throw new Error("Booking could not be deleted");
   return data;
 }
