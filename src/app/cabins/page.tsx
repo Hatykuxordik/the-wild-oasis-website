@@ -1,5 +1,6 @@
 import CabinCard from "@/app/_components/CabinCard";
 import type { Metadata } from "next";
+import { getCabins } from "../_lib/data-service";
 
 export const metadata: Metadata = {
   title: "Cabins",
@@ -15,9 +16,10 @@ type Cabin = {
   discount: number;
 };
 
-export default function Page(): JSX.Element {
+export default async function Page(): JSX.Element {
   // 2️⃣ Type the array correctly
-  const cabins: Cabin[] = [];
+  const cabins: Cabin[] = await getCabins();
+  console.log(cabins);
 
   return (
     <div>
