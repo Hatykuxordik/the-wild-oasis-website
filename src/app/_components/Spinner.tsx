@@ -1,4 +1,4 @@
-function Spinner(): JSX.Element {
+function Spinner(): JSX.Elemen {
   return <div className="spinner"></div>;
 }
 
