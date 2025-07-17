@@ -5,7 +5,7 @@ import { getCabins } from "@/app/_lib/data-service";
 
 // 1️⃣ Define the shape of a cabin
 type Cabin = {
-  id: string;
+  id: number;
   name: string;
   image: string;
   maxCapacity: number;

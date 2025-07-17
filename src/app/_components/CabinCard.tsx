@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Cabin = {
-  id: string;
+  id: number;
   name: string;
   maxCapacity: number;
   regularPrice: number;
