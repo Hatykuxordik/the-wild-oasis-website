@@ -3,7 +3,7 @@ import { supabase } from "@/app/_lib/supabase";
 
 // Types
 export type Cabin = {
-  id: string;
+  id: number;
   name: string;
   maxCapacity: number;
   regularPrice: number;
@@ -12,7 +12,7 @@ export type Cabin = {
 };
 
 export type Guest = {
-  id: string;
+  id: number;
   fullName: string;
   email: string;
   nationalID: string;
@@ -22,7 +22,7 @@ export type Guest = {
 };
 
 export type Booking = {
-  id: string;
+  id: number;
   guestId: string;
   startDate: string;
   endDate: string;
