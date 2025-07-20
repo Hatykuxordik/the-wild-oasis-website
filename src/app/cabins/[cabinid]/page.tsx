@@ -1,27 +1,15 @@
-import { getCabin } from "@/app/_lib/data-service";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 import Image from "next/image";
 
-//Define the expected shape of the params prop
-interface PageProps {
+type Params = {
   params: {
-    cabinid: string;
+    cabinId: string;
   };
-}
+};
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const cabin = await getCabin(params.cabinid);
-
-  return {
-    title: `Cabin ${cabin.name}`,
-  };
-}
-
-// Define the expected structure of a cabin
-interface Cabin {
+type Cabin = {
   id: number;
   name: string;
   maxCapacity: number;
@@ -29,13 +17,27 @@ interface Cabin {
   discount: number;
   image: string;
   description: string;
+};
+
+// Metadata generation with correct param name
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const { name } = await getCabin(params.cabinId);
+  return {
+    title: `Cabin ${name}`,
+  };
 }
 
-export default async function Page({
-  params,
-}: PageProps): Promise<JSX.Element> {
-  const cabin: Cabin = await getCabin(params.cabinid);
+// Static params must match the dynamic segment name [cabinId]
+export async function generateStaticParams(): Promise<{ cabinId: string }[]> {
+  const cabins = await getCabins();
+  return cabins.map((cabin: Cabin) => ({
+    cabinId: String(cabin.id),
+  }));
+}
 
+// Main page component with consistent naming
+export default async function Page({ params }: Params) {
+  const cabin: Cabin = await getCabin(params.cabinId);
   const { name, maxCapacity, image, description } = cabin;
 
   return (
