@@ -16,14 +16,21 @@ type Cabin = {
   regularPrice: number;
   discount: number;
   image: string;
-  description: string;
+  description?: string;
 };
 
 // Metadata generation with correct param name
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { name } = await getCabin(params.cabinId);
+  const cabin = await getCabin(params.cabinId);
+
+  if (!cabin) {
+    return {
+      title: "Cabin Not Found",
+    };
+  }
+
   return {
-    title: `Cabin ${name}`,
+    title: `Cabin ${cabin.name}`,
   };
 }
 
@@ -37,7 +44,7 @@ export async function generateStaticParams(): Promise<{ cabinId: string }[]> {
 
 // Main page component with consistent naming
 export default async function Page({ params }: Params) {
-  const cabin: Cabin = await getCabin(params.cabinId);
+  const cabin: Cabin = await getCabin(params?.cabinId);
   const { name, maxCapacity, image, description } = cabin;
 
   return (
