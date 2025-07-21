@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import CabinList from "@/app/_components/CabinList";
-import { Suspense } from "react";
-import Spinner from "@/app/_components/Spinner";
 
 export const metadata: Metadata = {
   title: "Cabins",
