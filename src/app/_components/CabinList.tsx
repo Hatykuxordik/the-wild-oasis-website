@@ -13,7 +13,7 @@ type Cabin = {
   discount: number;
 };
 
-async function CabinList(): JSX.Element {
+async function CabinList() {
   // 2️⃣ Type the array correctly
   const cabins: Cabin[] = await getCabins();
 

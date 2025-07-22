@@ -4,9 +4,9 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 type Props = {
-  params: {
+  params: Promise<{
     cabinId: string;
-  };
+  }>;
 };
 
 type Cabin = {

@@ -17,7 +17,7 @@ async function SelectCountry({
   name,
   id,
   className,
-}: SelectCountryProps): Promise<JSX.Element> {
+}: SelectCountryProps) {
   const countries: Country[] = await getCountries();
 
   const flag =
@@ -26,7 +26,7 @@ async function SelectCountry({
   return (
     <select
       name={name}
-      id={id}
+      id={`${id}`}
       defaultValue={`${defaultCountry}%${flag}`}
       className={className}
     >

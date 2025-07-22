@@ -31,7 +31,7 @@ const navLinks: NavLink[] = [
   },
 ];
 
-function SideNavigation(): JSX.Element {
+function SideNavigation() {
   return (
     <nav className="border-r border-primary-900">
       <ul className="flex flex-col gap-2 h-full text-lg">

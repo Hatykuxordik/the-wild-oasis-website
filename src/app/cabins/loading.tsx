@@ -1,6 +1,6 @@
 import Spinner from "@/app/_components/Spinner";
 
-export default function Loader(): JSX.Element {
+export default function Loader() {
   return (
     <div className="grid items-center justify-items-center">
       <Spinner />

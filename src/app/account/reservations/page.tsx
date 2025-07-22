@@ -20,7 +20,7 @@ type Booking = {
   };
 };
 
-export default function Page(): JSX.Element {
+export default function Page() {
   // CHANGE
   const bookings: Booking[] = [];
 

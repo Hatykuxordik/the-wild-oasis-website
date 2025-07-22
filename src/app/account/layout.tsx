@@ -5,7 +5,7 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-export default function Layout({ children }: LayoutProps): JSX.Element {
+export default function Layout({ children }: LayoutProps) {
   return (
     <div className="grid grid-cols-[16rem_1fr] h-full gap-24">
       <SideNavigation />

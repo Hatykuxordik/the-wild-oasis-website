@@ -15,7 +15,7 @@ type Cabin = {
 };
 
 type Booking = {
-  id: string;
+  id: number;
   guestId: string;
   startDate: string;
   endDate: string;
@@ -31,7 +31,7 @@ type ReservationCardProps = {
   booking: Booking;
 };
 
-function ReservationCard({ booking }: ReservationCardProps): JSX.Element {
+function ReservationCard({ booking }: ReservationCardProps) {
   const {
     id,
     guestId,

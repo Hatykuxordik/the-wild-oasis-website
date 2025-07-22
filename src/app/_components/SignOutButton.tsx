@@ -4,7 +4,7 @@ type SignOutButtonProps = {
   onClick?: () => void;
 };
 
-function SignOutButton({ onClick }: SignOutButtonProps): JSX.Element {
+function SignOutButton({ onClick }: SignOutButtonProps) {
   return (
     <button
       type="button"

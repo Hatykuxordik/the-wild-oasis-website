@@ -15,7 +15,7 @@ type CabinCardProps = {
   cabin: Cabin;
 };
 
-function CabinCard({ cabin }: CabinCardProps): JSX.Element {
+function CabinCard({ cabin }: CabinCardProps) {
   const { id, name, maxCapacity, regularPrice, discount, image } = cabin;
 
   return (
