@@ -3,7 +3,7 @@ import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 import Image from "next/image";
 
-type Params = {
+type Props = {
   params: {
     cabinId: string;
   };
@@ -20,7 +20,7 @@ type Cabin = {
 };
 
 // Metadata generation with correct param name
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cabin = await getCabin(params.cabinId);
 
   if (!cabin) {
@@ -43,7 +43,7 @@ export async function generateStaticParams(): Promise<{ cabinId: string }[]> {
 }
 
 // Main page component with consistent naming
-export default async function Page({ params }: Params) {
+export default async function Page({ params }: Props) {
   const cabin: Cabin = await getCabin(params?.cabinId);
   const { name, maxCapacity, image, description } = cabin;
 
