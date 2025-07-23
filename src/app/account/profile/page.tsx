@@ -1,5 +1,4 @@
 import SelectCountry from "@/app/_components/SelectCountry";
-import { title } from "process";
 
 export const metadata = {
   title: "Update profile",
