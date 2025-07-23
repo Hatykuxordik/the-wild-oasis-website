@@ -110,13 +110,13 @@ export async function getBookings(guestId: string): Promise<Booking[]> {
   const { data, error } = await supabase
     .from("bookings")
     .select(
-      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
+      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, status, cabins(name, image)"
     )
     .eq("guestId", guestId)
     .order("startDate");
 
   if (error) throw new Error("Bookings could not get loaded");
-  return data as Booking[];
+  return data as unknown as Booking[];
 }
 
 export async function getBookedDatesByCabinId(
@@ -168,8 +168,12 @@ export async function getCountries(): Promise<Country[]> {
 export async function createGuest(
   newGuest: Omit<Guest, "id" | "created_at">
 ): Promise<Guest[]> {
-  const { data, error } = await supabase.from("guests").insert([newGuest]);
+  const { data, error } = await supabase
+    .from("guests")
+    .insert([newGuest])
+    .select();
   if (error) throw new Error("Guest could not be created");
+  if (!data) throw new Error("No data returned when creating guest");
   return data;
 }
 
@@ -218,7 +222,11 @@ export async function updateBooking(
 
 // DELETE
 export async function deleteBooking(id: string): Promise<Booking[]> {
-  const { data, error } = await supabase.from("bookings").delete().eq("id", id);
+  const { data, error } = await supabase
+    .from("bookings")
+    .delete()
+    .eq("id", id)
+    .select();
   if (error) throw new Error("Booking could not be deleted");
   return data;
 }

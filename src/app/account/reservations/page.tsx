@@ -7,6 +7,7 @@ export const metadata = {
 
 type Booking = {
   id: number;
+  guestId: string;
   startDate: string;
   endDate: string;
   numNights: number;

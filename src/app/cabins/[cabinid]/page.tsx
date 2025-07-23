@@ -21,7 +21,8 @@ type Cabin = {
 
 // Metadata generation with correct param name
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const cabin = await getCabin(params.cabinId);
+  const resolvedParams = await params;
+  const cabin = await getCabin(resolvedParams.cabinId);
 
   if (!cabin) {
     return {
@@ -44,7 +45,8 @@ export async function generateStaticParams(): Promise<{ cabinId: string }[]> {
 
 // Main page component with consistent naming
 export default async function Page({ params }: Props) {
-  const cabin: Cabin = await getCabin(params?.cabinId);
+  const resolvedParams = await params;
+  const cabin: Cabin = await getCabin(resolvedParams?.cabinId);
   const { name, maxCapacity, image, description } = cabin;
 
   return (
