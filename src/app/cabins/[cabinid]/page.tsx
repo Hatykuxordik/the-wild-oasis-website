@@ -43,11 +43,7 @@ export async function generateStaticParams(): Promise<{ cabinId: string }[]> {
   }));
 }
 
-// Main page component with consistent naming
-export default async function Page({ params }: Props) {
-  const resolvedParams = await params;
-  const cabin: Cabin = await getCabin(resolvedParams?.cabinId);
-  const { name, maxCapacity, image, description } = cabin;
+
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
