@@ -1,8 +1,8 @@
-import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 import Image from "next/image";
 import NotFound from "./not-found";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 
 type Props = {
   params: Promise<{
@@ -47,8 +47,9 @@ export async function generateStaticParams(): Promise<{ cabinId: string }[]> {
 // Main page component
 export default async function Page({ params }: Props) {
   const resolvedParams = await params;
-  const cabin = await getCabin(resolvedParams?.cabinId);
+  const cabin = await getCabin(resolvedParams.cabinId);
 
+  console.log(cabin);
   // Handle case where cabin is null
   if (!cabin) {
     return <NotFound />;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-function NotFound(): JSX.Element {
+function NotFound() {
   return (
     <main className="text-center space-y-6 mt-4">
       <h1 className="text-3xl font-semibold">

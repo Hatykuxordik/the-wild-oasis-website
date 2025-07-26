@@ -49,7 +49,7 @@ export type Country = {
 };
 
 // GET
-export async function getCabin(id: string): Promise<Cabin | null> {
+export async function getCabin(id: string): Promise<Cabin> {
   const { data, error } = await supabase
     .from("cabins")
     .select("*")
@@ -59,7 +59,7 @@ export async function getCabin(id: string): Promise<Cabin | null> {
     console.error(error);
     notFound();
   }
-  return data;
+  return data as Cabin;
 }
 
 export async function getCabinPrice(
