@@ -20,6 +20,8 @@ type Cabin = {
   description: string;
 };
 
+export const revalidate = 3600;
+
 // Metadata generation
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;

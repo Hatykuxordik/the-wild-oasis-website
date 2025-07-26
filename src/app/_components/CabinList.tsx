@@ -1,5 +1,7 @@
 import React from "react";
 
+// import {unstable_noStore as noStore} from "next/cache";
+
 import CabinCard from "@/app/_components/CabinCard";
 import { getCabins } from "@/app/_lib/data-service";
 
@@ -14,6 +16,7 @@ type Cabin = {
 };
 
 async function CabinList() {
+  //noStore();  Ensure this data is not cached
   // 2️⃣ Type the array correctly
   const cabins: Cabin[] = await getCabins();
 
