@@ -2,6 +2,7 @@ import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 import Image from "next/image";
+import NotFound from "./not-found";
 
 type Props = {
   params: Promise<{
@@ -16,10 +17,10 @@ type Cabin = {
   regularPrice: number;
   discount: number;
   image: string;
-  description?: string;
+  description: string;
 };
 
-// Metadata generation with correct param name
+// Metadata generation
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const cabin = await getCabin(resolvedParams.cabinId);
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// Static params must match the dynamic segment name [cabinId]
+// Static params
 export async function generateStaticParams(): Promise<{ cabinId: string }[]> {
   const cabins = await getCabins();
   return cabins.map((cabin: Cabin) => ({
@@ -43,10 +44,16 @@ export async function generateStaticParams(): Promise<{ cabinId: string }[]> {
   }));
 }
 
-// Main page component with consistent naming
+// Main page component
 export default async function Page({ params }: Props) {
   const resolvedParams = await params;
-  const cabin: Cabin = await getCabin(resolvedParams?.cabinId);
+  const cabin = await getCabin(resolvedParams?.cabinId);
+
+  // Handle case where cabin is null
+  if (!cabin) {
+    return <NotFound />;
+  }
+
   const { name, maxCapacity, image, description } = cabin;
 
   return (

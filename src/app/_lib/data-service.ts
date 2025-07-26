@@ -10,6 +10,7 @@ export type Cabin = {
   regularPrice: number;
   discount: number;
   image: string;
+  description: string;
 };
 
 export type Guest = {
