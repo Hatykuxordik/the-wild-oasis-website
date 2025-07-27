@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Logo from "./Logo";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,30 +76,34 @@ export default function Navigation() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden fixed top-0 left-0 w-full h-[50vh] bg-primary-900 z-50 flex flex-col">
-          <button
-            type="button"
-            className="absolute top-4 right-4 flex justify-center items-center w-9 h-9 text-sm font-semibold rounded-lg border border-primary-900 text-primary-100 hover:bg-primary-800 focus:outline-none focus:bg-primary-800"
-            onClick={() => setIsOpen(false)}
-            aria-label="Close navigation"
-          >
-            <svg
-              className="w-4 h-4"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+        <div className="md:hidden fixed top-0 left-0 w-full h-[50vh] bg-primary-900/90 z-50 flex flex-col backdrop-blur-sm">
+          <div className="p-4 border-b border-primary-100">
+            <Logo onClick={() => setIsOpen(false)} />
+
+            <button
+              type="button"
+              className="absolute z-40 top-4 right-4 flex justify-center items-center w-9 h-9 text-sm font-semibold rounded-lg border border-primary-900 text-primary-100 hover:bg-primary-800 focus:outline-none focus:bg-primary-800"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close navigation"
             >
-              <path d="M18 6 6 18" />
-              <path d="m6 6 12 12" />
-            </svg>
-          </button>
-          <ul className="flex flex-col items-start gap-4 p-8 pt-16">
+              <svg
+                className="w-4 h-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
+            </button>
+          </div>
+          <ul className="flex flex-col items-start gap-6 p-4 pt-8">
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
