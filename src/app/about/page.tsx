@@ -15,13 +15,13 @@ export default async function Page() {
   const cabins = await getCabins();
 
   return (
-    <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
-      <div className="col-span-3">
-        <h1 className="text-4xl mb-10 text-accent-400 font-medium">
+    <div className="flex flex-col md:grid md:grid-cols-5 gap-x-24 gap-y-16 md:gap-y-32 text-lg items-center">
+      <div className="order-2 md:col-span-3">
+        <h1 className="text-3xl mb-3 md:text-4xl md:mb-10 text-accent-400 font-medium">
           Welcome to The Wild Oasis
         </h1>
 
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           <p>
             Where nature&apos;s beauty and comfortable living blend seamlessly.
             Hidden away in the heart of the Italian Dolomites, this is your
@@ -43,7 +43,7 @@ export default async function Page() {
         </div>
       </div>
 
-      <div className="col-span-2">
+      <div className="order-1 md:col-span-2">
         <Image
           src={image1}
           placeholder="blur"
@@ -51,7 +51,7 @@ export default async function Page() {
         />
       </div>
 
-      <div className="col-span-2">
+      <div className="order-3 md:col-span-2">
         <Image
           src={image2}
           placeholder="blur"
@@ -59,12 +59,12 @@ export default async function Page() {
         />
       </div>
 
-      <div className="col-span-3">
-        <h1 className="text-4xl mb-10 text-accent-400 font-medium">
+      <div className="order-4 md:col-span-3">
+        <h1 className="text-3xl md:text-4xl mb-3 md:mb-10 text-accent-400 font-medium">
           Managed by our family since 1962
         </h1>
 
-        <div className="space-y-8">
+        <div className="space-y-6 md:space-y-8">
           <p>
             Since 1962, The Wild Oasis has been a cherished family-run retreat.
             Started by our grandparents, this haven has been nurtured with love
