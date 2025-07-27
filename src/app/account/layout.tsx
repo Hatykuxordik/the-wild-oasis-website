@@ -7,7 +7,7 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="grid grid-cols-[16rem_1fr] h-full gap-24">
+    <div className="flex flex-col md:grid md:grid-cols-[16rem_1fr] md:h-full gap-12 md:gap-24">
       <SideNavigation />
       <div className="py-1">{children}</div>
     </div>
