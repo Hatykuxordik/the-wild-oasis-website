@@ -65,7 +65,7 @@ export default async function Page({ params }: Props) {
     <div className="w-full md:max-w-6xl mx-2 md:mx-auto mt-8">
       <Link
         href="/cabins"
-        className="md:hidden absolute top-30 left-2 z-20 text-primary-100 hover:text-accent-400 transition-colors"
+        className="md:hidden absolute top-22 left-1 z-20 text-primary-100 hover:text-accent-400 transition-colors"
         aria-label="Back to cabins"
       >
         <svg
@@ -98,7 +98,7 @@ export default async function Page({ params }: Props) {
         </div>
 
         <div>
-          <h3 className="text-accent-100 font-black text-4xl md:text-7xl mb-3 md:mb-5 translate-x-[-65px] md:translate-x-[-254px] bg-primary-950 p-4 md:p-6 pb-1 md:w-[150%]">
+          <h3 className="text-accent-100 font-black text-4xl md:text-7xl mb-3 md:mb-5 translate-x-[-54px] md:translate-x-[-254px] bg-primary-950 p-4 md:p-6 pb-1 md:w-[150%]">
             Cabin {name}
           </h3>
 
