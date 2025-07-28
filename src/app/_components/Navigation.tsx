@@ -5,9 +5,14 @@ import { useState } from "react";
 import Logo from "./Logo";
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const navItems = [
+  interface NavItem {
+    href: string;
+    label: string;
+  }
+
+  const navItems: NavItem[] = [
     { href: "/cabins", label: "Cabins" },
     { href: "/about", label: "About" },
     { href: "/account", label: "Guest area" },
