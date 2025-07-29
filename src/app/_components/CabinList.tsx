@@ -15,7 +15,11 @@ type Cabin = {
   discount: number;
 };
 
-async function CabinList({ filter }) {
+interface FilterProps {
+  filter: string;
+}
+
+async function CabinList({ filter }: FilterProps) {
   //noStore();  Ensure this data is not cached
   // 2️⃣ Type the array correctly
   const cabins: Cabin[] = await getCabins();
@@ -37,7 +41,7 @@ async function CabinList({ filter }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
-      {displayedCabins.map((cabin) => (
+      {displayedCabins?.map((cabin) => (
         <CabinCard cabin={cabin} key={cabin.id} />
       ))}
     </div>

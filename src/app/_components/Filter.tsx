@@ -53,7 +53,14 @@ export default function Filter() {
   );
 }
 
-function Button({ filter, handleFilter, activeFilter, children }) {
+interface ButtonProps {
+  filter: string;
+  handleFilter: (filter: string) => void;
+  activeFilter: string;
+  children: React.ReactNode;
+}
+
+function Button({ filter, handleFilter, activeFilter, children }: ButtonProps) {
   return (
     <button
       className={`py-1 md:py-2 px-2 md:px-5 hover:bg-primary-700 transition-colors ${
