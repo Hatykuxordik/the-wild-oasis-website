@@ -14,7 +14,7 @@ interface SearchParamsProps {
 }
 
 export default function Page({ searchParams }: SearchParamsProps) {
-  const filter = searchParams?.capacity || "all";
+  const filter = searchParams?.capacity ?? "all";
 
   return (
     <div>
