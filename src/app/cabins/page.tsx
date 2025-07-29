@@ -31,7 +31,10 @@ export default function Page({ searchParams }: SearchParamsProps) {
         Welcome to paradise.
       </p>
 
-      <Filter />
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
+
       <Suspense fallback={<Spinner />}>
         {/* Suspense is used to handle the loading state of the CabinList component */}
         <CabinList filter={filter} />
