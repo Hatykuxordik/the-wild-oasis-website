@@ -8,7 +8,7 @@ export default function Filter() {
   const router = useRouter();
   const pathname = usePathname();
 
-  function handleFilter(filter) {
+  function handleFilter(filter: string): void {
     const params = new URLSearchParams(searchParams);
     params.set("capacity", filter);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
