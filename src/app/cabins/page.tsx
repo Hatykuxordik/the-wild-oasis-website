@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import CabinList from "@/app/_components/CabinList";
 import { Suspense } from "react";
 import Spinner from "@/app/_components/Spinner";
+import Filter from "../_components/Filter";
 
 export const metadata: Metadata = {
   title: "Cabins",
@@ -30,6 +31,7 @@ export default function Page({ searchParams }: SearchParamsProps) {
         Welcome to paradise.
       </p>
 
+      <Filter />
       <Suspense fallback={<Spinner />}>
         {/* Suspense is used to handle the loading state of the CabinList component */}
         <CabinList filter={filter} />
