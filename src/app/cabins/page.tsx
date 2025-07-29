@@ -35,7 +35,7 @@ export default function Page({ searchParams }: SearchParamsProps) {
         <Filter />
       </div>
 
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner />} key={filter}>
         {/* Suspense is used to handle the loading state of the CabinList component */}
         <CabinList filter={filter} />
       </Suspense>
