@@ -3,6 +3,7 @@ import Spinner from "@/app/_components/Spinner";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Filter from "../_components/Filter";
+import ReservationReminder from "../_components/ReservationReminder";
 
 export const metadata: Metadata = {
   title: "Cabins",
@@ -38,6 +39,7 @@ export default function Page({ searchParams }: SearchParamsProps) {
       <Suspense fallback={<Spinner />} key={filter}>
         {/* Suspense is used to handle the loading state of the CabinList component */}
         <CabinList filter={filter} />
+        <ReservationReminder />
       </Suspense>
     </div>
   );
