@@ -1,10 +1,11 @@
+import Reservation from "@/app/_components/Reservation";
+import TextExpander from "@/app/_components/TextExpander";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 import Image from "next/image";
-import NotFound from "./not-found";
-import { getCabin, getCabins } from "@/app/_lib/data-service";
 import Link from "next/link";
-import TextExpander from "@/app/_components/TextExpander";
+import NotFound from "./not-found";
 
 type Props = {
   params: Promise<{
@@ -53,7 +54,6 @@ export default async function Page({ params }: Props) {
   const resolvedParams = await params;
   const cabin = await getCabin(resolvedParams.cabinId);
 
-  console.log(cabin);
   // Handle case where cabin is null
   if (!cabin) {
     return <NotFound />;
@@ -132,10 +132,12 @@ export default async function Page({ params }: Props) {
       </div>
 
       <div>
-        <h2 className="text-3xl md:text-5xl font-semibold text-center">
-          Reserve today.{" "}
+        <h2 className="text-3xl md:text-5xl font-semibold text-center mb-10 text-accent-400">
+          Reserve {name} today.{" "}
           <span className="block md:inline">Pay on arrival.</span>
         </h2>
+
+        <Reservation cabin={cabin} />
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
 import SelectCountry from "@/app/_components/SelectCountry";
 import UpdateProfileForm from "@/app/_components/UpdateProfileForm";
 
-export const metadata = {
+export const metadata: { title: string } = {
   title: "Update profile",
 };
 
 export default function Page() {
-  const countryFlag = "ng.jpg";
-  const nationality = "nigeria";
+  const countryFlag: string = "ng.jpg";
+  const nationality: string = "nigeria";
 
   return (
     <div>
@@ -19,7 +19,7 @@ export default function Page() {
         Providing the following information will make your check-in process
         faster and smoother. See you soon!
       </p>
-      <UpdateProfileForm>
+      <UpdateProfileForm countryFlag={countryFlag}>
         <SelectCountry
           name="nationality"
           id="nationality"

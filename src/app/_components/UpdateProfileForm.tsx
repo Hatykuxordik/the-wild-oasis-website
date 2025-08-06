@@ -2,11 +2,17 @@
 
 import { useState } from "react";
 
-export default function UpdateProfileForm(children) {
-  const [count, setCount] = useState();
+interface UpdateProfileFormProps {
+  children: React.ReactNode;
+}
 
-  const countryFlag = "ng.jpg";
-  const nationality = "nigeria";
+export default function UpdateProfileForm({
+  children,
+}: UpdateProfileFormProps) {
+  const [count, setCount] = useState<number>(0); // Default to 0 for clarity
+
+  const countryFlag: string = "ng.jpg";
+  const nationality: string = "nigeria";
 
   return (
     <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
@@ -48,7 +54,10 @@ export default function UpdateProfileForm(children) {
       </div>
 
       <div className="flex justify-end items-center gap-6">
-        <button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
+        <button
+          type="submit"
+          className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+        >
           Update profile
         </button>
       </div>
