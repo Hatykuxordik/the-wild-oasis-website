@@ -6,6 +6,8 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import NotFound from "./not-found";
+import { Suspense } from "react";
+import Spinner from "@/app/_components/Spinner";
 
 type Props = {
   params: Promise<{
@@ -137,7 +139,9 @@ export default async function Page({ params }: Props) {
           <span className="block md:inline">Pay on arrival.</span>
         </h2>
 
-        <Reservation cabin={cabin} />
+        <Suspense fallback={<Spinner />}>
+          <Reservation cabin={cabin} />
+        </Suspense>
       </div>
     </div>
   );
