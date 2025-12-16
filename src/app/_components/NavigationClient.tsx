@@ -41,7 +41,7 @@ export default function NavigationClient({ session }: NavigationClientProps) {
                     alt={session.user.name ?? "User"} // Fallback for alt if name is undefined
                     referrerPolicy="no-referrer"
                   />
-                  <span>Guest area</span>
+                  <span>{session.user.name}</span>
                 </Link>
               ) : (
                 <Link

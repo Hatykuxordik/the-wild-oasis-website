@@ -1,5 +1,7 @@
 // Reservation.tsx
+import { auth } from "../_lib/auth";
 import DateSelector from "./DateSelector";
+import LoginMessage from "./LoginMessage";
 import ReservationForm from "./ReservationForm";
 import { getBookedDatesByCabinId, getSettings } from "@/app/_lib/data-service";
 
@@ -17,6 +19,8 @@ async function Reservation({ cabin }: ReservationProps) {
     getBookedDatesByCabinId(cabin.id),
   ]);
 
+  const session = await auth();
+
   return (
     <div className="flex flex-col-reverse md:grid md:grid-cols-3 border border-primary-800 min-h-[400px]">
       <DateSelector
@@ -24,7 +28,11 @@ async function Reservation({ cabin }: ReservationProps) {
         bookedDates={bookedDates}
         cabin={cabin}
       />
-      <ReservationForm cabin={cabin} />
+      {session?.user ? (
+        <ReservationForm cabin={cabin} user={session?.user} />
+      ) : (
+        <LoginMessage />
+      )}
     </div>
   );
 }
