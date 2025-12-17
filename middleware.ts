@@ -5,8 +5,8 @@ export function middleware(request) {
 }*/
 
 import { auth } from "@/app/_lib/auth";
-export const middle = auth;
+export const middleware = auth;
 
 export const config = {
-  matcher: ["/account", "/cabins"],
+  matcher: ["/account", "/_next/data/:path*/account.json"],
 };
